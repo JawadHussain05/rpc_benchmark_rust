@@ -1,0 +1,103 @@
+use solana_client::rpc_client::RpcClient;
+use std::time::Instant;
+use std::env;
+use std::{thread, time};
+use solana_sdk::pubkey::Pubkey;
+use std::str::FromStr;
+use rand::Rng;
+
+
+
+// const URL: &str = "https://warmhearted-few-knowledge.solana-mainnet.discover.quiknode.pro/cb6276cf87111a6fae9055e578c942a5d9d8e55f/";
+// const URL: &str = "https://api.mainnet-beta.solana.com";
+// const URL: &str = "https://alpha-responsive-brook.solana-testnet.discover.quiknode.pro/de83de3cd9a527f0175b0e2078f997dd945426b2/";
+// const URL: &str = "https://solana-mainnet.g.alchemy.com/v2/tuu1BeAB7q1O6r-ZrirXwOqB1o3WUBXU";
+// const URL: &str = "https://mainnet.rpc.jito.wtf/?access-token=7eb55734-f7af-43f1-93ba-51f95e4e4ec4";
+// const URL: &str = "https://178.237.58.142";
+
+
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+    let iteration = &args[1];
+    let sleep = &args[2];
+    let URL: &str =  &args[3];
+ 
+    let key = [
+        Pubkey::from_str("DQyrAcCrDXQ7NeoqGgDCZwBvWDcYmFCjSb9JtteuvPpz").unwrap(),
+        Pubkey::from_str("CmMV3U4QYsykzM1fEYi3zoZh6A3ktmTKQpJxgignK1YR").unwrap(),
+        Pubkey::from_str("mj4ibrwroEtTsRD3SLkjeW4xP2UyBBYnPYvSUQhkDpA").unwrap(),
+        Pubkey::from_str("FdmKUE4UMiJYFK5ogCngHzShuVKrFXBamPWcewDr31th").unwrap(),
+        Pubkey::from_str("6yxszHV62pCjHtGijwgroqRXGVLuoiHUFhcEoHQepB91").unwrap(),
+        Pubkey::from_str("8JUjWjAyXTMB4ZXcV7nk3p6Gg1fWAAoSck7xekuyADKL").unwrap(),
+        Pubkey::from_str("FpFV46UVvRtcrRvYtKYgJpJtP1tZkvssjhrLUfoj8Cvo").unwrap(),
+        Pubkey::from_str("4jrV1Fwqxdnw3WXvLQiXqquLvn4p6p5F9imAVNEU4yCT").unwrap(),
+        Pubkey::from_str("DD6oh3HRCvMzqHkGeUW3za4pLgWNPJdV6aNYW3gVjXXi").unwrap(),
+        Pubkey::from_str("7HgvC7GdmUt7kMivdLMovLStW25avFsW9GDXgNr525Uy").unwrap(),
+        Pubkey::from_str("8cA5Vs3Po79hTeGS63rFfiKne1f4gLCugzRQqb71DsQd").unwrap(),
+        Pubkey::from_str("HLmqeL62xR1QoZ1HKKbXRrdN1p3phKpxRMb2VVopvBBz").unwrap(),
+        Pubkey::from_str("DD3baZQb3PFkk7NmJXRj9Ab7o1oq2h1mUae2FmEnJCs3").unwrap(),
+        Pubkey::from_str("29qrNgqv95icc64pbwrxKZAtBUCfjPJ1bxeNv2aXnsYi").unwrap(),
+        Pubkey::from_str("Eqrhxd7bDUCH3MepKmdVkgwazXRzY6iHhEoBpY7yAohk").unwrap(),
+        Pubkey::from_str("6AovHvG7UovcavaJW6rEef728JtFV5adZ9MaNRBcX2nH").unwrap(),
+        Pubkey::from_str("DaXyxj42ZDrp3mjrL9pYjPNyBp5P8A2f37am4Kd4EyrK").unwrap(),
+        Pubkey::from_str("GzwX68f1ZF4dKnAJ58RdET8sPvvnYktbDEHmjoGw7Umk").unwrap(),
+        Pubkey::from_str("5vkX52gpV1ZXmvk2JBSjD8z2wpGKp5Cs1XW15y5YB5ca").unwrap(),
+        Pubkey::from_str("6KR4qkJN91LGko2gdizheri8LMtCwsJrhtsQt6QPwCi5").unwrap(),
+        Pubkey::from_str("9FknRLGpWBqYg7fXQaBDyWWdu1v2RwUM6zRV6CiPjWBD").unwrap(),
+        Pubkey::from_str("9bYCzRepgoKRDPRbt5MmyioyNR2yZT5afNwaAs7CSpKx").unwrap(),
+        Pubkey::from_str("ANP74VNsHwSrq9uUSjiSNyNWvf6ZPrKTmE4gHoNd13Lg").unwrap(),
+        Pubkey::from_str("FfpKRggDra1uSskyzAm6f4EXFhxw6ij8BkDwiWTs126x").unwrap(),
+        Pubkey::from_str("5KSCuA99i7PSF6KvvbvV5hDveGse7isqF6e7tFXPeMyn").unwrap(),
+        Pubkey::from_str("AscevMTm9ckS6HhKC3MAvPCZgP1SNgZERSJ27XSUivMY").unwrap(),
+        Pubkey::from_str("LiM9qAQi7ud4fCkAcGcJJzmY47od7vzzeqKBejATbJm").unwrap(),
+        Pubkey::from_str("GBa7G5f1FqAXEgByuHXsqsEdpyMjRgT9SNxZwmmnEJAY").unwrap(),
+        Pubkey::from_str("xotXsNCx4tBhnwhrajGTaVgKq1sfuMkeYHc77ZegCqE").unwrap(),
+        Pubkey::from_str("7jwHW4Lw3nVaSJXskN5pUoKU6YB9RBVfZtGBp3VbR43U").unwrap(),
+        Pubkey::from_str("9SEBxqhP8sTAzmfiQfCPim1MqQXuDPb6fkGzJF7Z339i").unwrap(),
+        Pubkey::from_str("EbXNEUiKxSU1vwwhrbVNVk3qX4o1yU3p75SQUUMfc1zH").unwrap(),
+        Pubkey::from_str("FRAcFtJoX3udNcLpBcWa543WaanBoJWmHBeR6HLfHYEx").unwrap(),
+        Pubkey::from_str("75HgnSvXbWKZBpZHveX68ZzAhDqMzNDS29X6BGLtxMo1").unwrap(),
+        Pubkey::from_str("ACBf9ksELg2buAFnDTJL9WnT5kZRcFN1Bvarox9JZVbq").unwrap(),
+        Pubkey::from_str("13PtHDhQzswoFWg8Gr4yVrTmUEW4CWxeKFkLVERCmypB").unwrap(),
+        Pubkey::from_str("5VbFfRf1RCMCVEQpkzVLmVy9KLfT3uLTdJCGe4Bfyyno").unwrap(),
+        Pubkey::from_str("APQyCmCvyVFreK2JjFHinmja24jTHdwm4umNJo67Nu2v").unwrap(),
+        Pubkey::from_str("7hFgNawzzmpDM8TTVCKm8jykBrym8C3TQdb8TDAfAVkD").unwrap(),
+        Pubkey::from_str("8YswVYsTi66umBF2Bnkh4LB2VWMKPssDpe54VAgiuJZQ").unwrap(),
+        Pubkey::from_str("G7Gqjxk9EaJMeFfoFTSy9WfH8uurgQkbNQCREWAc56DZ").unwrap(),
+        Pubkey::from_str("G45yhM5mZ5RXZpLxGWLk3PVzdAp33z8aH6F9mLW8fQj3").unwrap(),
+        Pubkey::from_str("CLCj9b1vdPutrkvZS8ACTM5q42SXB2Q7khnMLVxDMGEK").unwrap(),
+        Pubkey::from_str("J9u24oScxNSMZV63Yc21TWrbvzHitTAWKiWrcJCNRUUG").unwrap(),
+    ];
+    //let mut rng = thread_rng();
+    //let selected_keys: Vec<_> = key.choose_multiple(&mut rng, 5).cloned().collect();
+
+
+    let iteration = iteration.parse::<i32>().unwrap();
+    let sleep = sleep.parse::<u64>().unwrap();
+    
+    let ten_millis = time::Duration::from_millis(sleep);
+
+    let url = URL.to_string();
+    let rpc_client = RpcClient::new(url);
+    let mut _itr = 0;
+    while _itr < iteration {
+        let _x = rand::thread_rng().gen_range(0..key.len());
+
+        let start = Instant::now();
+
+        // rpc_client.get_token_account_balance(&key[_x]);
+       println!("Request Reply: {:?}", rpc_client.get_block_height());
+        // rpc_client.get_cluster_nodes();
+        // println!("Response: {:?}",rpc_client.get_cluster_nodes());
+        // rpc_client.get_multiple_accounts(&selected_keys);
+
+        let duration = start.elapsed().as_micros();
+        // println!("ret: {:?}", ret);
+        (duration as f32)/1000.0);
+        thread::sleep(ten_millis);
+        _itr += 1;
+    }
+
+}
+// min, max, avg, meadian , stdeviation
